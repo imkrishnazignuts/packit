@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.get('/')
 def get_all_orders(user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         orders = db.query(Order).where(Order.user_id == user['id']).all()
         if not orders:
             raise HTTPException(detail="No order done",status_code=200)

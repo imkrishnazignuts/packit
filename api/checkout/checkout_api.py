@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post('')
 def checkout_cart(payment_type:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         db_user = db.query(User).where(User.id == user['id']).first()
         db_cart = db.query(Cart).where(Cart.user_id == user['id']).first()
         db_cart_product = db.query(CartProduct).where(CartProduct.cart_id == db_cart.id).all()

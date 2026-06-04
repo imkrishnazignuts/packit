@@ -28,7 +28,7 @@ def create_user(user:userCreate,db:Session=Depends(get_db)):
 
 @router.post('/select/{wid}')
 def select_warehouse(wid:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         db_warehouse = db.query(Warehouse).where(Warehouse.id==wid).first()
         if not db_warehouse:
             raise HTTPException(detail="Warehouse not found",status_code=404)

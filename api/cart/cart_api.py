@@ -16,7 +16,7 @@ router=APIRouter(
 
 @router.get('')
 def get_cart(user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         cart = db.query(Cart).where(Cart.user_id == user['id']).first()
         if not cart:
             raise HTTPException(detail='Cart is empty',status_code=200)
@@ -43,7 +43,7 @@ def get_cart(user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
 
 @router.post('/{pid}')
 def add_to_cart(pid:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         db_product_warehouse = db.query(ProductWarehouse).where(ProductWarehouse.product_id == pid).first()
         if not db_product_warehouse:
             raise HTTPException(detail="Product is not available",status_code=400)
@@ -83,7 +83,7 @@ def add_to_cart(pid:str,user:dict=Depends(get_current_user),db:Session=Depends(g
 
 @router.delete('/{pid}')
 def remove_from_cart(pid:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         db_product_warehouse = db.query(ProductWarehouse).where(ProductWarehouse.product_id == pid).first()
 
         if not db_product_warehouse:

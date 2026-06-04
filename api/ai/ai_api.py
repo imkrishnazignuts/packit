@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.get('/sugeestions')
 def give_suggesstions(user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
-    if user:
+    if user['role'] == "Customer":
         db_user = db.query(User).where(User.id == user['id']).first()
         
         db_products = get_warehouse_products(id=db_user.warehouse_id,user=user,db=db)

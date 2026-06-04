@@ -33,4 +33,4 @@ app.include_router(ai_router)
 @app.get('/')
 def root():
     print(os.getenv('DATABASE_URL'))
-    return "welcome"
+    return "welcome to backend  please add /docs after url "

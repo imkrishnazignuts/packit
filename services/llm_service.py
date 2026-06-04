@@ -2,7 +2,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from dotenv import load_dotenv
-from model_to_dict_stackoverflow import model_to_dict
+from .model_to_dict_stackoverflow import model_to_dict
 load_dotenv()
 
 llm = ChatGroq(
