@@ -6,6 +6,7 @@ from config.database import get_db
 from security.auth import get_current_user
 from models.order_product_model import OrderProduct
 from models.product_model import Product
+
 router = APIRouter(
     prefix='/orders',
     tags=['Order related']

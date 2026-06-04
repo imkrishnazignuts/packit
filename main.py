@@ -10,6 +10,7 @@ from security.auth import router as auth_router
 from api.cart.cart_api import router as cart_router
 from api.warehouse.warehouse_api import router as warehouse_router
 from api.checkout.checkout_api import router as checkout_router
+from api.ai.ai_api import router as ai_router
 
 load_dotenv()
 
@@ -28,7 +29,7 @@ app.include_router(order_router)
 app.include_router(cart_router)
 app.include_router(warehouse_router)
 app.include_router(checkout_router)
-
+app.include_router(ai_router)
 @app.get('/')
 def root():
     print(os.getenv('DATABASE_URL'))

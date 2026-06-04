@@ -12,7 +12,7 @@ router = APIRouter(
     tags=['Warehouse related']
 )
 
-@router.get('{id}/products',response_model=list[productResponse])
+@router.get('/{id}/products',response_model=list[productResponse])
 def get_warehouse_products(id:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):    
     if user:
         products = db.query(ProductWarehouse).where(ProductWarehouse.warehouse_id == id).all()
