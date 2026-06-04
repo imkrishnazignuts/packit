@@ -25,13 +25,17 @@ def get_cart(user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
         if not db_cart_product:
             raise HTTPException(detail="Cart is empty",status_code=200)
         db_items = []
+        total=0
         for row in db_cart_product:
             product = db.query(Product).where(Product.id==row.product_id).first()
             item = {
                 'product':product,
-                'quantity':row.quantity
+                'quantity':row.quantity,
+                'item_total':row.quantity * product.price
             }
+            total+=(row.quantity * product.price)
             db_items.append(item)
+        db_items.append({'total':total})
         return db_items
     raise HTTPException(detail='Authentication failed',status_code=403)
 
