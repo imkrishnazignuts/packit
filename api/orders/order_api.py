@@ -35,7 +35,7 @@ def get_all_orders(user:dict=Depends(get_current_user),db:Session=Depends(get_db
                 }
                 per_order_product.append(product_detail_in_order)
                 total += (row_row.quantity*db_product.price)
+            per_order_product.append({'total_bill':total})
             all_order_products.append(per_order_product)
-            all_order_products.append({'total_bill':total})
         return all_order_products
     

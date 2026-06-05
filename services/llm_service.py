@@ -6,7 +6,7 @@ from .model_to_dict_stackoverflow import model_to_dict
 load_dotenv()
 
 llm = ChatGroq(
-    model='openai/gpt-oss-120b',
+    model='meta-llama/llama-4-scout-17b-16e-instruct',
     temperature=0.2
 )
 
@@ -52,7 +52,8 @@ chain = prompt | llm | JsonOutputParser()
 
 
 def ai_suggessions(products,orders):
-    order_dict = model_to_dict(orders[0][0]['product'])
+    length = len(orders)
+    order_dict = model_to_dict(orders[length-1][0]['product'])
     all_products = []
     for i in range(len(products)):
         product_dict = model_to_dict(products[i])

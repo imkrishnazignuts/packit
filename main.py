@@ -11,7 +11,7 @@ from api.cart.cart_api import router as cart_router
 from api.warehouse.warehouse_api import router as warehouse_router
 from api.checkout.checkout_api import router as checkout_router
 from api.ai.ai_api import router as ai_router
-
+from api.search.search_api import router as search_router
 load_dotenv()
 
 user_model.Base.metadata.create_all(engine)
@@ -30,6 +30,7 @@ app.include_router(cart_router)
 app.include_router(warehouse_router)
 app.include_router(checkout_router)
 app.include_router(ai_router)
+app.include_router(search_router)
 @app.get('/')
 def root():
     print(os.getenv('DATABASE_URL'))
