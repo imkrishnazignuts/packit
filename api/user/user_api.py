@@ -14,12 +14,16 @@ router = APIRouter(
 
 @router.post("/create",response_model=userResponse)
 def create_user(user:userCreate,db:Session=Depends(get_db)):
+    if (not user.username) or (not user.password) or (not user.email) or (not user.role):
+        raise HTTPException(detail='Missing Argument',status_code=400)
+    if len(user.password) < 6:
+        raise HTTPException(detail='password must be 6 character long',status_code=400)
     db_user = db.query(User).where(User.username == user.username).first()
     
     if db_user:
         raise HTTPException(detail="User already exist",status_code=409)
     
-    db_user = User(id=str(uuid.uuid4()),username=user.username,password=pwd_context.hash(user.password),email=user.email,role=user.role)
+    db_user = User(id=str(uuid.uuid4()),username=user.username,password=pwd_context.hash(user.password),email=user.email,role=user.role,warehouse_id='warehouse002')
 
     db.add(db_user)
     db.commit()

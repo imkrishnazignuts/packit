@@ -15,6 +15,9 @@ router = APIRouter(
 @router.get('/{id}/products',response_model=list[productResponse])
 def get_warehouse_products(id:str,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):    
     if user:
+        db_warehouse = db.query(Warehouse).where(Warehouse.id == id).first()
+        if not db_warehouse:
+            raise HTTPException(detail="Invalid warehouse ID",status_code=404)
         products = db.query(ProductWarehouse).where(ProductWarehouse.warehouse_id == id).all()
         producst_dict = []
         for row in products:
